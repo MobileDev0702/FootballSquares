@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/game_img"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/icon" />
+
+
+        <TextView
+            android:id="@+id/game_name_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_semibold"
+            android:maxLines="2"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/game_join_btn"
+            app:layout_constraintStart_toEndOf="@+id/game_img"
+            app:layout_constraintTop_toTopOf="@+id/game_img"
+            tools:text="Big Day" />
+
+        <TextView
+            android:id="@+id/game_author_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_light"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/game_name_txt"
+            app:layout_constraintStart_toStartOf="@+id/game_name_txt"
+            app:layout_constraintTop_toBottomOf="@+id/game_name_txt"
+            tools:text="Created by @sd1234" />
+
+        <Button
+            android:id="@+id/game_join_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_semibold"
+            android:stateListAnimator="@null"
+            android:text="@string/join_btn"
+            android:textSize="14sp"
+            android:theme="@style/Button"
+            app:layout_constraintBottom_toBottomOf="@+id/game_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/game_img" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_gravity="bottom"
+        android:background="@color/divider"
+        android:padding="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp" />
+</FrameLayout>

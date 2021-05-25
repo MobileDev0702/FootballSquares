@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/board_cell_size"
+    android:layout_height="@dimen/board_cell_size"
+    android:background="@color/theme_green"
+    android:fontFamily="@font/raleway_light"
+    android:gravity="center"
+    android:textColor="@color/white"
+    android:textSize="20sp"
+    tools:ignore="MissingPrefix"
+    tools:text="1" />

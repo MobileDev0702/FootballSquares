@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9dcf8f</color><!--#9dcf8f-->
+    <color name="colorPrimaryDark">#7fa874</color>
+    <color name="colorAccent">@color/green</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="facebook">#3b5998</color>
+    <color name="background">#ffffff</color>
+    <color name="background_light">#F0F0F0</color>
+    <color name="divider">#C6C6C6</color>
+    <color name="button_disabled">#aaa</color>
+    <color name="red">#F44336</color>
+    <color name="white">#fff</color>
+    <color name="green">#60b864</color>
+    <color name="welcome_bg">#3f3f37</color><!--#b9f6ca-->
+    <color name="welcome_text">#d8d8d8</color>
+    <color name="orange">#ff7300</color>
+    <color name="text_inactive">#77ffffff</color>
+
+    <color name="color_gray">#252525</color>
+    <color name="color_green">#60b864</color>
+    <color name="color_lightgray">#727272</color>
+
+    <!-- THEME -->
+    <color name="theme_green">#60b864</color>
+    <color name="theme_green_dark">#4CA951</color>
+    <color name="theme_gray">#969795</color>
+    <color name="theme_gray_dark">#484947</color>
+    <color name="theme_black">#252525</color>
+    <color name="company_blue1">#0353a4</color>
+    <color name="company_blue2">#023e7d</color>
+    <color name="theme_yellow">#FFE066</color>
+
+</resources>

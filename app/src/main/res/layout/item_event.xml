@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout11"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true">
+
+    <ImageView
+        android:id="@+id/event_home_img"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
+        android:paddingBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/afc" />
+
+    <TextView
+        android:id="@+id/event_home_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/raleway_semibold"
+        android:maxLines="1"
+        android:textAlignment="textStart"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/event_time_txt"
+        app:layout_constraintStart_toEndOf="@+id/event_home_img"
+        app:layout_constraintTop_toTopOf="@+id/event_time_txt"
+        tools:ignore="MissingPrefix"
+        tools:text="Big Day" />
+
+    <TextView
+        android:id="@+id/event_time_txt"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/raleway_light"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="AT"
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/event_away_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/raleway_semibold"
+        android:maxLines="1"
+        android:textAlignment="textEnd"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/event_time_txt"
+        app:layout_constraintEnd_toStartOf="@+id/event_away_img"
+        app:layout_constraintTop_toTopOf="@+id/event_time_txt"
+        tools:ignore="MissingPrefix"
+        tools:text="Big Day" />
+
+    <ImageView
+        android:id="@+id/event_away_img"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
+        android:paddingBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nfc" />
+</androidx.constraintlayout.widget.ConstraintLayout>

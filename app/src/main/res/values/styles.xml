@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/color_gray</item>
+        <item name="colorAccent">@color/color_green</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:popupWindowStyle">@style/PopupWindowStyle</item>
+    </style>
+
+    <style name="PopupWindowStyle" parent="@android:style/Widget.PopupWindow">
+        <item name="android:popupBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#22000000</item>
+    </style>
+
+    <style name="AppTheme.Loading" parent="AppTheme" tools:ignore="NewApi">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorAccent">@color/color_green</item>
+    </style>
+
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:height">64dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="colorButtonNormal">@color/color_green</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+
+    <style name="Button.Host" parent="Button">
+        <item name="colorButtonNormal">@color/color_green</item>
+    </style>
+
+    <style name="Button.Orange" parent="Button">
+        <item name="colorButtonNormal">@color/orange</item>
+    </style>
+
+    <style name="Button.Facebook" parent="Button">
+        <item name="colorButtonNormal">@color/facebook</item>
+    </style>
+
+    <style name="Button.Borderless" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:height">32dp</item>
+    </style>
+
+    <style name="EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/color_green</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="EditText.Light" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:shadowColor">#cc333333</item>
+        <item name="android:shadowRadius">10</item>
+        <item name="android:shadowDy">1</item>
+    </style>
+
+    <style name="EditText.Green" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textColorHint">@color/primary_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="backgroundTint">@color/color_green</item>
+    </style>
+
+    <style name="MaterialDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/color_green</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+</resources>

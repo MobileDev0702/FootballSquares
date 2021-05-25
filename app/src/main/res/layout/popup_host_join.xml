@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/background_white"
+        android:elevation="4dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/game_host"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_marginTop="1dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="12dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="12dp">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/icon_football"
+                app:tint="@color/theme_green" />
+
+            <TextView
+                android:id="@+id/game_information_txtd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="Host a Game"
+                android:textColor="@color/primary_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginStart="44dp"
+            android:background="#11000000" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/game_join"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_marginTop="1dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingLeft="16dp"
+            android:paddingTop="12dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="12dp">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/icon_search"
+                app:tint="@color/theme_gray" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="Join a Game"
+                android:textColor="@color/primary_text"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/player_details_dividerd"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginStart="44dp"
+            android:background="#11000000" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginStart="44dp"
+            android:background="#11000000" />
+
+        <View
+            android:id="@+id/paid_players_dividerd"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginStart="44dp"
+            android:background="#11000000" />
+
+    </LinearLayout>
+</FrameLayout>

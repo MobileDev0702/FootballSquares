@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.moyersoftware.contender">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+
+    <application
+        android:name=".util.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:targetApi="n">
+        <activity android:name=".menu.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Accept chrome links -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="moyersoftware.com"
+                    android:pathPrefix="/contender"
+                    android:scheme="http" />
+                <data
+                    android:host="www.moyersoftware.com"
+                    android:pathPrefix="/contender"
+                    android:scheme="http" />
+                <data
+                    android:host="moyersoftware.com"
+                    android:pathPrefix="/contender"
+                    android:scheme="https" />
+                <data
+                    android:host="www.moyersoftware.com"
+                    android:pathPrefix="/contender"
+                    android:scheme="https" />
+                <data android:scheme="contender" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".login.LoadingActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Loading" />
+        <activity
+            android:name=".login.FindFriendsActivity"
+            android:theme="@style/AppTheme.Loading" />
+        <activity
+            android:name=".login.RegisterActivity"
+            android:theme="@style/AppTheme.Loading"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:theme="@style/AppTheme.Loading"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".game.HostActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".game.JoinActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".game.GameBoardActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".game.HowToPlayActivity"
+            android:label="@string/title_activity_how_to_play"
+            android:theme="@style/AppTheme.Translucent" />
+        <activity
+            android:name=".game.HowToUseActivity"
+            android:label="@string/title_activity_how_to_use"
+            android:theme="@style/AppTheme.Translucent" />
+
+        <service android:name=".game.service.WinnerService" />
+        <service
+            android:name=".game.service.firebase.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".game.receiver.BootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.moyersoftware.contender"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="43f362435ff9fc1d11e95af6f7d0c0b0a1fc15a8" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1761468736156699~2270259675"/>
+    </application>
+
+</manifest>

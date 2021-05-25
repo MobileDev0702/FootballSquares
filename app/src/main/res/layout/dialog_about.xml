@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:fontFamily="@font/montserrat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title1"
+        android:textColor="@color/color_green"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:fontFamily="@font/montserrat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title2"
+        android:textColor="@color/color_lightgray"
+        android:textSize="12sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30px" />
+
+    <TextView
+        android:fontFamily="@font/didact_gothic"
+        android:id="@+id/aboutVersionTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textStyle="normal|bold"
+        tools:text="@string/about_version" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30px" />
+
+    <TextView
+        android:fontFamily="@font/didact_gothic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/settings_about_affiliation"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/primary_text"
+        android:textSize="12sp"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:fontFamily="@font/didact_gothic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/settings_about_copyright"
+        android:textAlignment="center"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix" />
+</LinearLayout>
