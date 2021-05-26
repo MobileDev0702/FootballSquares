@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">moyersoftware.com</domain>
         <domain includeSubdomains="true">i.nflcdn.com</domain>
+        <domain includeSubdomains="true">site.api.espn.com</domain>
     </domain-config>
 </network-security-config>
