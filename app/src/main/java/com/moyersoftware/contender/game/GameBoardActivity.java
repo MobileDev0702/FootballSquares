@@ -22,6 +22,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -55,6 +56,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,6 +68,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.gson.Gson;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -89,6 +98,8 @@ import com.moyersoftware.contender.util.CustomLinearLayout;
 import com.moyersoftware.contender.util.StandardGestures;
 import com.moyersoftware.contender.util.Util;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -236,6 +247,8 @@ public class GameBoardActivity extends AppCompatActivity {
     TextView numPlayers;
     @BindView(R.id.btnPDF)
     ImageButton btnPDF;
+    @BindView(R.id.btnInvite)
+    Button btnInvite;
 
     // Usual variables
     private int mTotalScrollY;
@@ -315,6 +328,10 @@ public class GameBoardActivity extends AppCompatActivity {
             }
         });
 
+        btnInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { onInviteButtonClicked(); }
+        });
     }
 
     private void initScoresPager() {
@@ -516,6 +533,7 @@ public class GameBoardActivity extends AppCompatActivity {
             //playerImage.setVisibility(View.VISIBLE);
             //Picasso.get().load(game.getAuthor().getPhoto()).into(playerImage);
         //}
+
         playerName.setText(game.getAuthor().getName());
         playerEmail.setText(game.getAuthor().getEmail());
         //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
@@ -1066,6 +1084,45 @@ public class GameBoardActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void onInviteButtonClicked() {
+        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse("http://moyersoftware.com/contender/"))
+                .setDynamicLinkDomain("nxjm7.app.goo.gl")
+                // Open links with this app on Android
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                // Open links with com.example.ios on iOS
+                //.setIosParameters(new DynamicLink.IosParameters.Builder("com.example.ios").build())
+                .buildDynamicLink();
+        //click -- link -- google play store -- installed/ or not  ----
+        Uri dynamicLinkUri = dynamicLink.getUri();
+        Log.e("main", "  Long refer "+ dynamicLink.getUri());
+
+        Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLongLink(dynamicLink.getUri())
+                .buildShortDynamicLink()
+                .addOnCompleteListener(this, new OnCompleteListener<ShortDynamicLink>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<ShortDynamicLink> task) {
+                        if (task.isSuccessful()) {
+                            // Short link created
+                            Uri shortLink = task.getResult().getShortLink();
+                            Uri flowchartLink = task.getResult().getPreviewLink();
+                            Log.e("main ", "short link "+ shortLink.toString());
+                            // share app dialog
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_SEND);
+                            intent.putExtra(Intent.EXTRA_TEXT,  shortLink.toString());
+                            intent.setType("text/plain");
+                            startActivity(intent);
+                        } else {
+                            // Error
+                            // ...
+                            Log.e("main", " error "+task.getException() );
+                        }
+                    }
+                });
     }
 
     private void onPdfButtonClicked() {

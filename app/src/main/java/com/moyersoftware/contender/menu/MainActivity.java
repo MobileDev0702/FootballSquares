@@ -33,7 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
+import com.google.firebase.installations.FirebaseInstallations;
 import com.moyersoftware.contender.R;
 import com.moyersoftware.contender.game.GameBoardActivity;
 import com.moyersoftware.contender.game.HowToPlayActivity;
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateGoogleToken() {
         retrofit2.Call<Void> call = ApiFactory.getApiService().updateToken
-                (mFirebaseUser.getUid(), FirebaseInstanceId.getInstance().getToken());
+                (mFirebaseUser.getUid(), FirebaseInstallations.getInstance().getToken(false).toString());
         call.enqueue(new retrofit2.Callback<Void>() {
             @Override
             public void onResponse(retrofit2.Call<Void> call,
