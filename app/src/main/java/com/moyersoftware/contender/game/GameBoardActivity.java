@@ -15,16 +15,17 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -57,10 +58,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -70,7 +68,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.gson.Gson;
 import com.itextpdf.text.Document;
@@ -97,7 +94,6 @@ import com.moyersoftware.contender.network.ApiFactory;
 import com.moyersoftware.contender.util.CustomLinearLayout;
 import com.moyersoftware.contender.util.StandardGestures;
 import com.moyersoftware.contender.util.Util;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -295,6 +291,7 @@ public class GameBoardActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private boolean isActivityActive = false;
     private int numP;
+    private AlertDialog mPlayerPotInformationDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -537,6 +534,15 @@ public class GameBoardActivity extends AppCompatActivity {
         playerName.setText(game.getAuthor().getName());
         playerEmail.setText(game.getAuthor().getEmail());
         //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
+
+        Button playerPaid = playerLayout.findViewById(R.id.player_paid);
+        playerPaid.setOnClickListener(v -> {
+            mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
+            View playerpotInforLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
+            mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mPlayerPotInformationDialog.setView(playerpotInforLayout);
+            mPlayerPotInformationDialog.show();
+        });
         mPlayersLayout.addView(playerLayout);
         numP = 1;
         for (Player player : game.getPlayers()) {
@@ -557,6 +563,14 @@ public class GameBoardActivity extends AppCompatActivity {
             playerEmail.setText(player.getEmail());
             //squaresCount.setText(player.getUserId()); <--- need to figure # of squares
 
+            playerPaid = playerLayout.findViewById(R.id.player_paid);
+            playerPaid.setOnClickListener(v -> {
+                mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
+                View playerpotInforLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
+                mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                mPlayerPotInformationDialog.setView(playerpotInforLayout);
+                mPlayerPotInformationDialog.show();
+            });
             numP++;
             mPlayersLayout.addView(playerLayout);
         }
