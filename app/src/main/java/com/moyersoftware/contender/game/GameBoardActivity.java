@@ -518,64 +518,6 @@ public class GameBoardActivity extends AppCompatActivity {
             mScoresLayout.setVisibility(View.GONE);
         }
 
-        View playerLayout = LayoutInflater.from(this)
-                .inflate(R.layout.item_player_avatar, null);
-        TextView playerName = playerLayout.findViewById(R.id.player_name);
-        TextView playerEmail = playerLayout.findViewById(R.id.player_email);
-        TextView squaresCount = playerLayout.findViewById(R.id.squaresCount);
-        //ImageView playerImage = playerLayout.findViewById(R.id.player_photo);
-        //if (TextUtils.isEmpty(game.getAuthor().getPhoto())) {
-            //playerImage.setVisibility(View.GONE);
-        //} else {
-            //playerImage.setVisibility(View.VISIBLE);
-            //Picasso.get().load(game.getAuthor().getPhoto()).into(playerImage);
-        //}
-
-        playerName.setText(game.getAuthor().getName());
-        playerEmail.setText(game.getAuthor().getEmail());
-        //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
-
-        Button playerPaid = playerLayout.findViewById(R.id.player_paid);
-        playerPaid.setOnClickListener(v -> {
-            mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
-            View playerpotInforLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
-            mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            mPlayerPotInformationDialog.setView(playerpotInforLayout);
-            mPlayerPotInformationDialog.show();
-        });
-        mPlayersLayout.addView(playerLayout);
-        numP = 1;
-        for (Player player : game.getPlayers()) {
-            playerLayout = LayoutInflater.from(this)
-                    .inflate(R.layout.item_player_avatar, null);
-            playerName = playerLayout.findViewById(R.id.player_name);
-            playerEmail = playerLayout.findViewById(R.id.player_email);
-            squaresCount = playerLayout.findViewById(R.id.squaresCount);
-            //playerImage = playerLayout.findViewById(R.id.player_photo);
-            if (TextUtils.isEmpty(player.getPhoto())) {
-                //playerImage.setVisibility(View.GONE);
-            } else {
-                //playerImage.setVisibility(View.VISIBLE);
-                //Picasso.get().load(player.getPhoto()).into(playerImage);
-            }
-            //playerName.setText(parseNameAbbr(player.getName()));
-            playerName.setText(player.getName());
-            playerEmail.setText(player.getEmail());
-            //squaresCount.setText(player.getUserId()); <--- need to figure # of squares
-
-            playerPaid = playerLayout.findViewById(R.id.player_paid);
-            playerPaid.setOnClickListener(v -> {
-                mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
-                View playerpotInforLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
-                mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                mPlayerPotInformationDialog.setView(playerpotInforLayout);
-                mPlayerPotInformationDialog.show();
-            });
-            numP++;
-            mPlayersLayout.addView(playerLayout);
-        }
-        numPlayers.setText(numP+" players");
-
         mPdfQ1Txt.setText(String.valueOf(game.getQuarter1Price()));
         mPdfQ2Txt.setText(String.valueOf(game.getQuarter2Price()));
         mPdfQ3Txt.setText(String.valueOf(game.getQuarter3Price()));
@@ -766,6 +708,77 @@ public class GameBoardActivity extends AppCompatActivity {
 
         initPlayers();
         initPaidPlayers();
+        View playerLayout = LayoutInflater.from(this)
+                .inflate(R.layout.item_player_avatar, null);
+        TextView playerName = playerLayout.findViewById(R.id.player_name);
+        TextView playerEmail = playerLayout.findViewById(R.id.player_email);
+        TextView squaresCount = playerLayout.findViewById(R.id.squaresCount);
+        //ImageView playerImage = playerLayout.findViewById(R.id.player_photo);
+        //if (TextUtils.isEmpty(game.getAuthor().getPhoto())) {
+            //playerImage.setVisibility(View.GONE);
+        //} else {
+            //playerImage.setVisibility(View.VISIBLE);
+            //Picasso.get().load(game.getAuthor().getPhoto()).into(playerImage);
+        //}
+
+        playerName.setText(game.getAuthor().getName());
+        playerEmail.setText(game.getAuthor().getEmail());
+        //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
+        squaresCount.setText(mSelectedSquaresCount.get(0).toString() + " squares");
+
+        Button playerPaid = playerLayout.findViewById(R.id.player_paid);
+        playerPaid.setOnClickListener(v -> {
+            mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
+            View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
+            mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mPlayerPotInformationDialog.setView(playerPotInfoLayout);
+
+            Button saveBtn = mPlayerPotInformationDialog.findViewById(R.id.btnSave);
+            EditText totalPaid = mPlayerPotInformationDialog.findViewById(R.id.player_total_paid);
+            saveBtn.setOnClickListener(vv -> {
+
+            });
+            mPlayerPotInformationDialog.show();
+        });
+        mPlayersLayout.addView(playerLayout);
+        numP = 1;
+        for (Player player : game.getPlayers()) {
+            playerLayout = LayoutInflater.from(this)
+                    .inflate(R.layout.item_player_avatar, null);
+            playerName = playerLayout.findViewById(R.id.player_name);
+            playerEmail = playerLayout.findViewById(R.id.player_email);
+            squaresCount = playerLayout.findViewById(R.id.squaresCount);
+            //playerImage = playerLayout.findViewById(R.id.player_photo);
+            if (TextUtils.isEmpty(player.getPhoto())) {
+                //playerImage.setVisibility(View.GONE);
+            } else {
+                //playerImage.setVisibility(View.VISIBLE);
+                //Picasso.get().load(player.getPhoto()).into(playerImage);
+            }
+            //playerName.setText(parseNameAbbr(player.getName()));
+            playerName.setText(player.getName());
+            playerEmail.setText(player.getEmail());
+            //squaresCount.setText(player.getUserId()); <--- need to figure # of squares
+            squaresCount.setText(mSelectedSquaresCount.get(numP).toString() + " squares");
+
+            playerPaid = playerLayout.findViewById(R.id.player_paid);
+            playerPaid.setOnClickListener(v -> {
+                mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
+                View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
+                mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                mPlayerPotInformationDialog.setView(playerPotInfoLayout);
+
+                Button saveBtn = mPlayerPotInformationDialog.findViewById(R.id.btnSave);
+                EditText totalPaid = mPlayerPotInformationDialog.findViewById(R.id.player_total_paid);
+                saveBtn.setOnClickListener(vv -> {
+
+                });
+                mPlayerPotInformationDialog.show();
+            });
+            numP++;
+            mPlayersLayout.addView(playerLayout);
+        }
+        numPlayers.setText(numP+" players");
     }
 
     public PopupWindow popupDisplay() {
@@ -839,21 +852,30 @@ public class GameBoardActivity extends AppCompatActivity {
         mPlayers.clear();
         mAllPlayers.clear();
         mSelectedSquaresCount.clear();
-        if (mAuthorId.equals(mMyId)) {
-            mPlayers.add(new Player(mMyId, null, mMyEmail, mMyName, mMyPhoto));
-            mAllPlayers.add(new Player(mMyId, null, mMyEmail, mMyName, mMyPhoto));
-            int playerSquares = 0;
-            for (SelectedSquare selectedSquare : mSelectedSquares) {
-                String playerId = mMyId;
-                if (selectedSquare.getAuthorId().equals(playerId)) {
-                    playerSquares++;
-                }
+//        if (mAuthorId.equals(mMyId)) {
+//            mPlayers.add(new Player(mMyId, null, mMyEmail, mMyName, mMyPhoto));
+//            mAllPlayers.add(new Player(mMyId, null, mMyEmail, mMyName, mMyPhoto));
+//            int playerSquares = 0;
+//            for (SelectedSquare selectedSquare : mSelectedSquares) {
+//                String playerId = mMyId;
+//                if (selectedSquare.getAuthorId().equals(playerId)) {
+//                    playerSquares++;
+//                }
+//            }
+//            mSelectedSquaresCount.add(playerSquares);
+//        }
+        mPlayers.add(mGame.getAuthor());
+        int authorSquares = 0;
+        for (SelectedSquare selectedSquare : mSelectedSquares) {
+            String authorId = mGame.getAuthor().getUserId();
+            if (selectedSquare.getAuthorId().equals(authorId)) {
+                authorSquares++;
             }
-            mSelectedSquaresCount.add(playerSquares);
         }
+        mSelectedSquaresCount.add(authorSquares);
         for (Player player : mGame.getPlayers()) {
-            if (!TextUtils.isEmpty(player.getCreatedByUserId())
-                    && player.getCreatedByUserId().equals(mDeviceOwnerId)) {
+//            if (!TextUtils.isEmpty(player.getCreatedByUserId())
+//                    && player.getCreatedByUserId().equals(mDeviceOwnerId)) {
                 mPlayers.add(player);
 
                 int playerSquares = 0;
@@ -864,7 +886,7 @@ public class GameBoardActivity extends AppCompatActivity {
                     }
                 }
                 mSelectedSquaresCount.add(playerSquares);
-            }
+//            }
 
             mAllPlayers.add(player);
         }
