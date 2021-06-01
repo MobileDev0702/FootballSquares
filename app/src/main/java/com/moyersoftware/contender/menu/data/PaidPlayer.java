@@ -7,14 +7,16 @@ public final class PaidPlayer {
 
     private String userId;
     private boolean paid;
+    private double totalPaid;
 
     public PaidPlayer() {
         // Default constructor required for calls to DataSnapshot.getValue(Player.class)
     }
 
-    public PaidPlayer(String userId, Boolean paid) {
+    public PaidPlayer(String userId, Boolean paid, double totalPaid) {
         this.userId = userId;
         this.paid = paid;
+        this.totalPaid = totalPaid;
     }
 
     public String getUserId() {
@@ -25,7 +27,11 @@ public final class PaidPlayer {
         return paid;
     }
 
+    public double getTotalPaid() { return totalPaid; }
+
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
+
+    public void setTotalPaid(double totalPaid) { this.totalPaid = totalPaid; }
 }

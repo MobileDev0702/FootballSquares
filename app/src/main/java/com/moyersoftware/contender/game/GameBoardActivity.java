@@ -726,20 +726,84 @@ public class GameBoardActivity extends AppCompatActivity {
         //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
         squaresCount.setText(mSelectedSquaresCount.get(0).toString() + " squares");
 
-        Button playerPaid = playerLayout.findViewById(R.id.player_paid);
-        playerPaid.setOnClickListener(v -> {
-            mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
-            View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
-            mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            mPlayerPotInformationDialog.setView(playerPotInfoLayout);
+        if (mIsHost) {
+            Button playerPaid = playerLayout.findViewById(R.id.player_paid);
+            playerPaid.setTag("paidButton");
+            playerPaid.setOnClickListener(v -> {
+                mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
+                View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
+                mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                mPlayerPotInformationDialog.setView(playerPotInfoLayout);
 
-            Button saveBtn = mPlayerPotInformationDialog.findViewById(R.id.btnSave);
-            EditText totalPaid = mPlayerPotInformationDialog.findViewById(R.id.player_total_paid);
-            saveBtn.setOnClickListener(vv -> {
+                TextView totalSquares = playerPotInfoLayout.findViewById(R.id.player_total_squares);
+                totalSquares.setText(mSelectedSquaresCount.get(0).toString() + " squares");
 
+                TextView totalOwed = playerPotInfoLayout.findViewById(R.id.player_total_owed);
+                ArrayList<PaidPlayer> paidPlayers = game.getPaidPlayers();
+                if (paidPlayers == null) {
+                    double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(0));
+                    totalOwed.setText(String.valueOf(totalSquareCost));
+                    paidPlayers = new ArrayList<>();
+                }
+
+                boolean isFound = false;
+                for (PaidPlayer paidPlayer : paidPlayers) {
+                    if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
+                        double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(0));
+                        totalOwed.setText(String.valueOf(totalSquareCost - paidPlayer.getTotalPaid()));
+                        isFound = true;
+                        break;
+                    }
+                }
+                if (!isFound) {
+                    double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(0));
+                    totalOwed.setText(String.valueOf(totalSquareCost));
+                }
+
+                EditText totalPaid = playerPotInfoLayout.findViewById(R.id.player_total_paid);
+                Button saveBtn = playerPotInfoLayout.findViewById(R.id.btnSave);
+
+                ArrayList<PaidPlayer> finalPaidPlayers = paidPlayers;
+                saveBtn.setOnClickListener(vv -> {
+
+                    boolean foundPaidPlayer = false;
+                    for (PaidPlayer paidPlayer : finalPaidPlayers) {
+                        if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
+                            double totPaid = paidPlayer.getTotalPaid() + Double.parseDouble(totalPaid.getText().toString());
+
+                            if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
+                                paidPlayer.setPaid(true);
+                                paidPlayer.setTotalPaid(game.getSquarePrice() * mSelectedSquaresCount.get(0));
+                                Button btn = (Button) v.getTag();
+                                btn.setText("PAID");
+                                btn.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                            } else {
+                                paidPlayer.setPaid(false);
+                                paidPlayer.setTotalPaid(totPaid);
+                            }
+                            foundPaidPlayer = true;
+                            break;
+                        }
+                    }
+                    double totPaid = Double.parseDouble(totalPaid.getText().toString());
+                    if (!foundPaidPlayer) {
+                        if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
+                            finalPaidPlayers.add(new PaidPlayer(game.getAuthor().getUserId(), false, game.getSquarePrice() * mSelectedSquaresCount.get(0)));
+                            playerPaid.setText("PAID");
+                            playerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                        } else {
+                            finalPaidPlayers.add(new PaidPlayer(game.getAuthor().getUserId(), false, totPaid));
+                        }
+                    }
+                    mGame.setPaidPlayers(finalPaidPlayers);
+                    initPaidPlayers();
+                    updateGameOnServer();
+                    mPlayerPotInformationDialog.dismiss();
+                });
+                mPlayerPotInformationDialog.show();
             });
-            mPlayerPotInformationDialog.show();
-        });
+        }
+
         mPlayersLayout.addView(playerLayout);
         numP = 1;
         for (Player player : game.getPlayers()) {
@@ -761,20 +825,78 @@ public class GameBoardActivity extends AppCompatActivity {
             //squaresCount.setText(player.getUserId()); <--- need to figure # of squares
             squaresCount.setText(mSelectedSquaresCount.get(numP).toString() + " squares");
 
-            playerPaid = playerLayout.findViewById(R.id.player_paid);
-            playerPaid.setOnClickListener(v -> {
-                mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
-                View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
-                mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                mPlayerPotInformationDialog.setView(playerPotInfoLayout);
+            if (mIsHost) {
+                Button playerPaid = playerLayout.findViewById(R.id.player_paid);
+                playerPaid.setTag(numP);
+                playerPaid.setOnClickListener(v -> {
+                    mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
+                    View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
+                    mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    mPlayerPotInformationDialog.setView(playerPotInfoLayout);
 
-                Button saveBtn = mPlayerPotInformationDialog.findViewById(R.id.btnSave);
-                EditText totalPaid = mPlayerPotInformationDialog.findViewById(R.id.player_total_paid);
-                saveBtn.setOnClickListener(vv -> {
+                    TextView totalSquares = playerPotInfoLayout.findViewById(R.id.player_total_squares);
+                    totalSquares.setText(mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))).toString() + " squares");
 
+                    TextView totalOwed = playerPotInfoLayout.findViewById(R.id.player_total_owed);
+                    ArrayList<PaidPlayer> paidPlayers = game.getPaidPlayers();
+                    if (paidPlayers == null) {
+                        double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
+                        totalOwed.setText(String.valueOf(totalSquareCost));
+                        paidPlayers = new ArrayList<>();
+                    }
+
+                    boolean isFound = false;
+                    for (PaidPlayer paidPlayer : paidPlayers) {
+                        if (paidPlayer.getUserId().equals(player.getUserId())) {
+                            double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
+                            totalOwed.setText(String.valueOf(totalSquareCost - paidPlayer.getTotalPaid()));
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if (!isFound) {
+                        double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
+                        totalOwed.setText(String.valueOf(totalSquareCost));
+                    }
+
+                    EditText totalPaid = playerPotInfoLayout.findViewById(R.id.player_total_paid);
+                    Button saveBtn = playerPotInfoLayout.findViewById(R.id.btnSave);
+
+                    ArrayList<PaidPlayer> finalPaidPlayers = paidPlayers;
+                    saveBtn.setOnClickListener(vv -> {
+                        boolean foundPaidPlayer = false;
+                        for (PaidPlayer paidPlayer : finalPaidPlayers) {
+                            if (paidPlayer.getUserId().equals(player.getUserId())) {
+                                double totPaid = paidPlayer.getTotalPaid() + Double.parseDouble(totalPaid.getText().toString());
+                                if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))) {
+                                    paidPlayer.setPaid(true);
+                                    paidPlayer.setTotalPaid(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
+                                    playerPaid.setText("PAID");
+                                    playerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                                } else {
+                                    paidPlayer.setPaid(false);
+                                    paidPlayer.setTotalPaid(totPaid);
+                                }
+                                foundPaidPlayer = true;
+                                break;
+                            }
+                        }
+                        double totPaid = Double.parseDouble(totalPaid.getText().toString());
+                        if (!foundPaidPlayer) {
+                            if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))) {
+                                finalPaidPlayers.add(new PaidPlayer(player.getUserId(), true, game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))));
+                            } else {
+                                finalPaidPlayers.add(new PaidPlayer(player.getUserId(), false, totPaid));
+                            }
+                        }
+                        mGame.setPaidPlayers(finalPaidPlayers);
+                        initPaidPlayers();
+                        updateGameOnServer();
+                        mPlayerPotInformationDialog.dismiss();
+                    });
+                    mPlayerPotInformationDialog.show();
                 });
-                mPlayerPotInformationDialog.show();
-            });
+            }
             numP++;
             mPlayersLayout.addView(playerLayout);
         }
@@ -1771,7 +1893,7 @@ public class GameBoardActivity extends AppCompatActivity {
         }
 
         if (!foundPaidPlayer) {
-            paidPlayers.add(new PaidPlayer(playerId, checked));
+            paidPlayers.add(new PaidPlayer(playerId, checked, 0));
         }
         mGame.setPaidPlayers(paidPlayers);
         initPaidPlayers();
