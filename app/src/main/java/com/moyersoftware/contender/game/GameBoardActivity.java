@@ -725,11 +725,19 @@ public class GameBoardActivity extends AppCompatActivity {
         playerEmail.setText(game.getAuthor().getEmail());
         //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
         squaresCount.setText(mSelectedSquaresCount.get(0).toString() + " squares");
+        Button authorPlayerPaid = playerLayout.findViewById(R.id.player_paid);
+        for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
+            if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
+                if (paidPlayer.paid()) {
+                    authorPlayerPaid.setText("PAID");
+                    authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                    break;
+                }
+            }
+        }
 
         if (mIsHost) {
-            Button playerPaid = playerLayout.findViewById(R.id.player_paid);
-            playerPaid.setTag("paidButton");
-            playerPaid.setOnClickListener(v -> {
+            authorPlayerPaid.setOnClickListener(v -> {
                 mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
                 View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
                 mPlayerPotInformationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -774,9 +782,8 @@ public class GameBoardActivity extends AppCompatActivity {
                             if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
                                 paidPlayer.setPaid(true);
                                 paidPlayer.setTotalPaid(game.getSquarePrice() * mSelectedSquaresCount.get(0));
-                                Button btn = (Button) v.getTag();
-                                btn.setText("PAID");
-                                btn.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                                authorPlayerPaid.setText("PAID");
+                                authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                             } else {
                                 paidPlayer.setPaid(false);
                                 paidPlayer.setTotalPaid(totPaid);
@@ -789,8 +796,8 @@ public class GameBoardActivity extends AppCompatActivity {
                     if (!foundPaidPlayer) {
                         if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
                             finalPaidPlayers.add(new PaidPlayer(game.getAuthor().getUserId(), false, game.getSquarePrice() * mSelectedSquaresCount.get(0)));
-                            playerPaid.setText("PAID");
-                            playerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                            authorPlayerPaid.setText("PAID");
+                            authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                         } else {
                             finalPaidPlayers.add(new PaidPlayer(game.getAuthor().getUserId(), false, totPaid));
                         }
@@ -806,6 +813,7 @@ public class GameBoardActivity extends AppCompatActivity {
 
         mPlayersLayout.addView(playerLayout);
         numP = 1;
+        ArrayList<Button> paidBtn = new ArrayList<>();
         for (Player player : game.getPlayers()) {
             playerLayout = LayoutInflater.from(this)
                     .inflate(R.layout.item_player_avatar, null);
@@ -825,9 +833,21 @@ public class GameBoardActivity extends AppCompatActivity {
             //squaresCount.setText(player.getUserId()); <--- need to figure # of squares
             squaresCount.setText(mSelectedSquaresCount.get(numP).toString() + " squares");
 
+            Button playerPaid = playerLayout.findViewById(R.id.player_paid);
+            paidBtn.add(playerPaid);
+            playerPaid.setTag(numP);
+
+            for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
+                if (paidPlayer.getUserId().equals(player.getUserId())) {
+                    if (paidPlayer.paid()) {
+                        paidBtn.get(numP - 1).setText("PAID");
+                        paidBtn.get(numP - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                        break;
+                    }
+                }
+            }
+
             if (mIsHost) {
-                Button playerPaid = playerLayout.findViewById(R.id.player_paid);
-                playerPaid.setTag(numP);
                 playerPaid.setOnClickListener(v -> {
                     mPlayerPotInformationDialog = new AlertDialog.Builder(GameBoardActivity.this).create();
                     View playerPotInfoLayout = LayoutInflater.from(getContext()).inflate(R.layout.dialog_player_pot_information, null);
@@ -871,8 +891,8 @@ public class GameBoardActivity extends AppCompatActivity {
                                 if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))) {
                                     paidPlayer.setPaid(true);
                                     paidPlayer.setTotalPaid(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
-                                    playerPaid.setText("PAID");
-                                    playerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                                    paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setText("PAID");
+                                    paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                                 } else {
                                     paidPlayer.setPaid(false);
                                     paidPlayer.setTotalPaid(totPaid);
@@ -885,6 +905,8 @@ public class GameBoardActivity extends AppCompatActivity {
                         if (!foundPaidPlayer) {
                             if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))) {
                                 finalPaidPlayers.add(new PaidPlayer(player.getUserId(), true, game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))));
+                                paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setText("PAID");
+                                paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                             } else {
                                 finalPaidPlayers.add(new PaidPlayer(player.getUserId(), false, totPaid));
                             }
