@@ -41,6 +41,8 @@ import com.moyersoftware.contender.util.Util;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,7 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                         finish();
-                        LoadingActivity.sActivity.finish();
+//                        LoadingActivity.sActivity.finish();
                         Util.setCurrentPlayerId(FirebaseAuth.getInstance()
                                 .getCurrentUser().getUid());
 

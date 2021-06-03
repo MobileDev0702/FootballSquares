@@ -708,6 +708,7 @@ public class GameBoardActivity extends AppCompatActivity {
 
         initPlayers();
         initPaidPlayers();
+
         View playerLayout = LayoutInflater.from(this)
                 .inflate(R.layout.item_player_avatar, null);
         TextView playerName = playerLayout.findViewById(R.id.player_name);
@@ -726,12 +727,14 @@ public class GameBoardActivity extends AppCompatActivity {
         //playerName.setText(parseNameAbbr(game.getAuthor().getName()));
         squaresCount.setText(mSelectedSquaresCount.get(0).toString() + " squares");
         Button authorPlayerPaid = playerLayout.findViewById(R.id.player_paid);
-        for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
-            if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
-                if (paidPlayer.paid()) {
-                    authorPlayerPaid.setText("PAID");
-                    authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
-                    break;
+        if (game.getPaidPlayers() != null) {
+            for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
+                if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
+                    if (paidPlayer.getTotalPaid() >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
+                        authorPlayerPaid.setText("PAID");
+                        authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                        break;
+                    }
                 }
             }
         }
@@ -747,25 +750,26 @@ public class GameBoardActivity extends AppCompatActivity {
                 totalSquares.setText(mSelectedSquaresCount.get(0).toString() + " squares");
 
                 TextView totalOwed = playerPotInfoLayout.findViewById(R.id.player_total_owed);
+                double totalSquareCost = game.getSquarePrice() * mSelectedSquaresCount.get(0);
+                totalOwed.setText(String.valueOf(totalSquareCost));
+
+                TextView stillOwed = playerPotInfoLayout.findViewById(R.id.player_still_owed);
                 ArrayList<PaidPlayer> paidPlayers = game.getPaidPlayers();
                 if (paidPlayers == null) {
-                    double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(0));
-                    totalOwed.setText(String.valueOf(totalSquareCost));
+                    stillOwed.setText(String.valueOf(totalSquareCost));
                     paidPlayers = new ArrayList<>();
                 }
 
                 boolean isFound = false;
                 for (PaidPlayer paidPlayer : paidPlayers) {
                     if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
-                        double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(0));
-                        totalOwed.setText(String.valueOf(totalSquareCost - paidPlayer.getTotalPaid()));
+                        stillOwed.setText(String.valueOf(totalSquareCost - paidPlayer.getTotalPaid()));
                         isFound = true;
                         break;
                     }
                 }
                 if (!isFound) {
-                    double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(0));
-                    totalOwed.setText(String.valueOf(totalSquareCost));
+                    stillOwed.setText(String.valueOf(totalSquareCost));
                 }
 
                 EditText totalPaid = playerPotInfoLayout.findViewById(R.id.player_total_paid);
@@ -779,9 +783,9 @@ public class GameBoardActivity extends AppCompatActivity {
                         if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
                             double totPaid = paidPlayer.getTotalPaid() + Double.parseDouble(totalPaid.getText().toString());
 
-                            if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
+                            if (totPaid >= totalSquareCost) {
                                 paidPlayer.setPaid(true);
-                                paidPlayer.setTotalPaid(game.getSquarePrice() * mSelectedSquaresCount.get(0));
+                                paidPlayer.setTotalPaid(totalSquareCost);
                                 authorPlayerPaid.setText("PAID");
                                 authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                             } else {
@@ -794,8 +798,8 @@ public class GameBoardActivity extends AppCompatActivity {
                     }
                     double totPaid = Double.parseDouble(totalPaid.getText().toString());
                     if (!foundPaidPlayer) {
-                        if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
-                            finalPaidPlayers.add(new PaidPlayer(game.getAuthor().getUserId(), false, game.getSquarePrice() * mSelectedSquaresCount.get(0)));
+                        if (totPaid >= totalSquareCost) {
+                            finalPaidPlayers.add(new PaidPlayer(game.getAuthor().getUserId(), false, totalSquareCost));
                             authorPlayerPaid.setText("PAID");
                             authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                         } else {
@@ -837,12 +841,14 @@ public class GameBoardActivity extends AppCompatActivity {
             paidBtn.add(playerPaid);
             playerPaid.setTag(numP);
 
-            for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
-                if (paidPlayer.getUserId().equals(player.getUserId())) {
-                    if (paidPlayer.paid()) {
-                        paidBtn.get(numP - 1).setText("PAID");
-                        paidBtn.get(numP - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
-                        break;
+            if (game.getPaidPlayers() != null) {
+                for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
+                    if (paidPlayer.getUserId().equals(player.getUserId())) {
+                        if (paidPlayer.getTotalPaid() >= game.getSquarePrice() * mSelectedSquaresCount.get(numP - 1)) {
+                            paidBtn.get(numP - 1).setText("PAID");
+                            paidBtn.get(numP - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                            break;
+                        }
                     }
                 }
             }
@@ -858,25 +864,26 @@ public class GameBoardActivity extends AppCompatActivity {
                     totalSquares.setText(mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))).toString() + " squares");
 
                     TextView totalOwed = playerPotInfoLayout.findViewById(R.id.player_total_owed);
+                    double totalSquareCost = game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())));
+                    totalOwed.setText(String.valueOf(totalSquareCost));
+
+                    TextView stillOwed = playerPotInfoLayout.findViewById(R.id.player_still_owed);
                     ArrayList<PaidPlayer> paidPlayers = game.getPaidPlayers();
                     if (paidPlayers == null) {
-                        double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
-                        totalOwed.setText(String.valueOf(totalSquareCost));
+                        stillOwed.setText(String.valueOf(totalSquareCost));
                         paidPlayers = new ArrayList<>();
                     }
 
                     boolean isFound = false;
                     for (PaidPlayer paidPlayer : paidPlayers) {
                         if (paidPlayer.getUserId().equals(player.getUserId())) {
-                            double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
-                            totalOwed.setText(String.valueOf(totalSquareCost - paidPlayer.getTotalPaid()));
+                            stillOwed.setText(String.valueOf(totalSquareCost - paidPlayer.getTotalPaid()));
                             isFound = true;
                             break;
                         }
                     }
                     if (!isFound) {
-                        double totalSquareCost = (double)(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
-                        totalOwed.setText(String.valueOf(totalSquareCost));
+                        stillOwed.setText(String.valueOf(totalSquareCost));
                     }
 
                     EditText totalPaid = playerPotInfoLayout.findViewById(R.id.player_total_paid);
@@ -888,9 +895,9 @@ public class GameBoardActivity extends AppCompatActivity {
                         for (PaidPlayer paidPlayer : finalPaidPlayers) {
                             if (paidPlayer.getUserId().equals(player.getUserId())) {
                                 double totPaid = paidPlayer.getTotalPaid() + Double.parseDouble(totalPaid.getText().toString());
-                                if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))) {
+                                if (totPaid >= totalSquareCost) {
                                     paidPlayer.setPaid(true);
-                                    paidPlayer.setTotalPaid(game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag()))));
+                                    paidPlayer.setTotalPaid(totalSquareCost);
                                     paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setText("PAID");
                                     paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                                 } else {
@@ -903,8 +910,8 @@ public class GameBoardActivity extends AppCompatActivity {
                         }
                         double totPaid = Double.parseDouble(totalPaid.getText().toString());
                         if (!foundPaidPlayer) {
-                            if (totPaid >= game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))) {
-                                finalPaidPlayers.add(new PaidPlayer(player.getUserId(), true, game.getSquarePrice() * mSelectedSquaresCount.get(Integer.parseInt(String.valueOf(v.getTag())))));
+                            if (totPaid >= totalSquareCost) {
+                                finalPaidPlayers.add(new PaidPlayer(player.getUserId(), true, totalSquareCost));
                                 paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setText("PAID");
                                 paidBtn.get(Integer.parseInt(String.valueOf(v.getTag())) - 1).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
                             } else {
