@@ -23,6 +23,8 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.applinks.AppLinkData;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.installations.FirebaseInstallations;
 import com.moyersoftware.contender.R;
 import com.moyersoftware.contender.game.GameBoardActivity;
@@ -47,11 +51,15 @@ import com.moyersoftware.contender.menu.data.Player;
 import com.moyersoftware.contender.network.ApiFactory;
 import com.moyersoftware.contender.util.Util;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+
+import static com.moyersoftware.contender.util.MyApplication.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         initTabs();
         initUser();
         //updatePhoneNumber();
+        receiveDynamicLink();
 
         if (!Util.isTutorialShown(mFirebaseUser.getUid())) {
             startActivity(new Intent(this, HowToPlayActivity.class));
@@ -104,6 +113,33 @@ public class MainActivity extends AppCompatActivity {
 
         updateGoogleToken();
 
+    }
+
+    private void receiveDynamicLink() {
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                        }
+
+                        if (deepLink != null) {
+                            String[] splitDeepLink = deepLink.toString().split("id=");
+                            String gameId = splitDeepLink[splitDeepLink.length - 1];
+                            playGame(gameId);
+//                            Toast.makeText(getContext(), splitDeepLink[splitDeepLink.length - 1], Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void updateGoogleToken() {

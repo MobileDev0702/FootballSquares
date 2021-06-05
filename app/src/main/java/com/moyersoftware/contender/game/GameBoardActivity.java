@@ -58,6 +58,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,6 +70,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.gson.Gson;
 import com.itextpdf.text.Document;
@@ -1275,7 +1278,7 @@ public class GameBoardActivity extends AppCompatActivity {
 
     private void onInviteButtonClicked() {
         DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse("http://moyersoftware.com/contender/"))
+                .setLink(Uri.parse("http://moyersoftware.com/contender/?id=" + mGameId))
                 .setDynamicLinkDomain("nxjm7.app.goo.gl")
                 // Open links with this app on Android
                 .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
@@ -1287,7 +1290,7 @@ public class GameBoardActivity extends AppCompatActivity {
         Log.e("main", "  Long refer "+ dynamicLink.getUri());
 
         Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLongLink(dynamicLink.getUri())
+                .setLongLink(dynamicLinkUri)
                 .buildShortDynamicLink()
                 .addOnCompleteListener(this, new OnCompleteListener<ShortDynamicLink>() {
                     @Override

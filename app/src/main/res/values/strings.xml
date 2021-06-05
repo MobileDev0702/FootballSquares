@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Football Squares</string>
     <string name="facebook_app_id">1228412957223237</string>
-    <string name="ADMOB_BANNER_UNIT_ID">ca-app-pub-1761468736156699/1458069982</string>
+    <string name="ADMOB_BANNER_UNIT_ID">ca-app-pub-3940256099942544/6300978111</string>
+<!--    ca-app-pub-3940256099942544/6300978111 Test ID-->
+<!--    ca-app-pub-1761468736156699/1458069982 YOUR ID-->
 
     <!-- Loading screen -->
     <string name="loading_email">Sign in with Email</string>
