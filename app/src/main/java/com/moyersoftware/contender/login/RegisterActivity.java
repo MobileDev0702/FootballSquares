@@ -110,21 +110,28 @@ public class RegisterActivity extends AppCompatActivity {
                     user_.put("name", mNameEditTxt.getText().toString());
                     user_.put("email", mEmailEditTxt.getText().toString());
                     user_.put("id", mUserId);
-                    fStore.collection("users").document(mUserId)
-                            .set(user_)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("START","success");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("START","error");
-                                }
-                            });
+//                    fStore.collection("users").document(mUserId)
+//                            .set(user_)
+//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Log.d("START","success");
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.d("START","error");
+//                                }
+//                            });
 
+                    FirebaseDatabase.getInstance().getReference().child("users").child(mUserId).setValue(user_)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d("START","success");
+                            }
+                        });
 
                         finish();
 //                        LoadingActivity.sActivity.finish();
