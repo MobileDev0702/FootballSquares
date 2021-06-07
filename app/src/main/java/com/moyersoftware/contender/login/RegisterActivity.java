@@ -131,6 +131,12 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 Log.d("START","success");
                             }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Log.d("START","error");
+                            }
                         });
 
                         finish();
