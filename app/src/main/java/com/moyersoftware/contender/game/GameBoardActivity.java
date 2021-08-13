@@ -732,11 +732,15 @@ public class GameBoardActivity extends AppCompatActivity {
         Button authorPlayerPaid = playerLayout.findViewById(R.id.player_paid);
         if (game.getPaidPlayers() != null) {
             for (PaidPlayer paidPlayer : game.getPaidPlayers()) {
-                if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
-                    if (paidPlayer.getTotalPaid() >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
-                        authorPlayerPaid.setText("PAID");
-                        authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
-                        break;
+                if (!mIsHost) {
+                    authorPlayerPaid.setVisibility(View.GONE);
+                }else {
+                    if (paidPlayer.getUserId().equals(game.getAuthor().getUserId())) {
+                        if (paidPlayer.getTotalPaid() >= game.getSquarePrice() * mSelectedSquaresCount.get(0)) {
+                            authorPlayerPaid.setText("PAID");
+                            authorPlayerPaid.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.theme_green));
+                            break;
+                        }
                     }
                 }
             }
@@ -928,6 +932,8 @@ public class GameBoardActivity extends AppCompatActivity {
                     });
                     mPlayerPotInformationDialog.show();
                 });
+            }else{
+                playerPaid.setVisibility(View.GONE);
             }
             numP++;
             mPlayersLayout.addView(playerLayout);
@@ -945,9 +951,9 @@ public class GameBoardActivity extends AppCompatActivity {
         if (!mGameLive) {
             view = inflater.inflate(R.layout.popup_window, null);
 
-            view.findViewById(R.id.player_details).setOnClickListener(menuClickListener);
+            //view.findViewById(R.id.player_details).setOnClickListener(menuClickListener);
             view.findViewById(R.id.list_players).setOnClickListener(menuClickListener);
-            view.findViewById(R.id.paid_players).setOnClickListener(menuClickListener);
+            //view.findViewById(R.id.paid_players).setOnClickListener(menuClickListener);
             view.findViewById(R.id.create_pdf).setOnClickListener(menuClickListener);
             view.findViewById(R.id.game_information).setOnClickListener(menuClickListener);
         } else {
@@ -956,20 +962,20 @@ public class GameBoardActivity extends AppCompatActivity {
             view.findViewById(R.id.list_players).setOnClickListener(menuClickListener);
             view.findViewById(R.id.create_pdf).setOnClickListener(menuClickListener);
             view.findViewById(R.id.game_information).setOnClickListener(menuClickListener);
-            view.findViewById(R.id.paid_players).setOnClickListener(menuClickListener);
+            //view.findViewById(R.id.paid_players).setOnClickListener(menuClickListener);
         }
-        if (view.findViewById(R.id.paid_players) != null) {
-            view.findViewById(R.id.paid_players).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
-            view.findViewById(R.id.paid_players_divider).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
-        }
+        //if (view.findViewById(R.id.paid_players) != null) {
+        //    view.findViewById(R.id.paid_players).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
+        //    view.findViewById(R.id.paid_players_divider).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
+        //}
 
-        if (view.findViewById(R.id.player_details) != null) {
-            view.findViewById(R.id.player_details).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
-            view.findViewById(R.id.player_details_divider).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
-        }
+        //if (view.findViewById(R.id.player_details) != null) {
+        //    view.findViewById(R.id.player_details).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
+        //    view.findViewById(R.id.player_details_divider).setVisibility(mIsHost ? View.VISIBLE : View.GONE);
+        //}
 
         if (view.findViewById(R.id.list_players_title) != null) {
-            ((TextView) view.findViewById(R.id.list_players_title)).setText(mGameLive ? R.string.list_of_players : R.string.invite_friends);
+            ((TextView) view.findViewById(R.id.list_players_title)).setText(mGameLive ? R.string.invite_friends : R.string.invite_friends);
         }
 
         ((TextView) view.findViewById(R.id.game_information_txt)).setText
@@ -1612,27 +1618,27 @@ public class GameBoardActivity extends AppCompatActivity {
         mInviteFriendsDialog.show();
     }
 
-    public void onPaidPlayersButtonClicked(View view) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MaterialDialog);
-
-        dialogBuilder.setTitle("Players who paid");
-        @SuppressLint("InflateParams")
-        RecyclerView recycler = (RecyclerView) LayoutInflater.from(this).inflate
-                (R.layout.dialog_paid_players, null);
-        mPaidPlayersAdapter = new GamePaidPlayersAdapter(this, mAllPlayers);
-        mPaidPlayersAdapter.setPaidPlayers(mPaidPlayers);
-        recycler.setAdapter(mPaidPlayersAdapter);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-        dialogBuilder.setView(recycler);
-        dialogBuilder.setNegativeButton("Close", null);
-        dialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                updateGameOnServer();
-            }
-        });
-        dialogBuilder.create().show();
-    }
+    //public void onPaidPlayersButtonClicked(View view) {
+   //     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MaterialDialog);
+//
+   //     dialogBuilder.setTitle("Players who paid");
+   //     @SuppressLint("InflateParams")
+   //     RecyclerView recycler = (RecyclerView) LayoutInflater.from(this).inflate
+    //            (R.layout.dialog_paid_players, null);
+    //    mPaidPlayersAdapter = new GamePaidPlayersAdapter(this, mAllPlayers);
+    //    mPaidPlayersAdapter.setPaidPlayers(mPaidPlayers);
+    //    recycler.setAdapter(mPaidPlayersAdapter);
+    //    recycler.setLayoutManager(new LinearLayoutManager(this));
+    //    dialogBuilder.setView(recycler);
+    //    dialogBuilder.setNegativeButton("Close", null);
+   //     dialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+    //        @Override
+    //        public void onDismiss(DialogInterface dialogInterface) {
+    //            updateGameOnServer();
+   //         }
+    //    });
+    //    dialogBuilder.create().show();
+    //}
 
     private void loadFriends() {
         mDatabase.child("friends").addValueEventListener(new ValueEventListener() {
@@ -1747,12 +1753,13 @@ public class GameBoardActivity extends AppCompatActivity {
 
             if (v.getId() == R.id.create_pdf) {
                 onPdfButtonClicked(null);
-            } else if (v.getId() == R.id.player_details) {
-                onManualAddButtonClicked(null);
+            //} else if (v.getId() == R.id.player_details) {
+            //    onManualAddButtonClicked(null);
             } else if (v.getId() == R.id.list_players) {
-                onInviteFriendsButtonClicked(null);
-            } else if (v.getId() == R.id.paid_players) {
-                onPaidPlayersButtonClicked(null);
+                //onInviteFriendsButtonClicked(null);
+                onInviteButtonClicked();
+            //} else if (v.getId() == R.id.paid_players) {
+            //    onPaidPlayersButtonClicked(null);
             } else if (v.getId() == R.id.game_information) {
                 onGameInformationButtonClicked();
             } else {
@@ -1785,12 +1792,13 @@ public class GameBoardActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.create_pdf) {
             onPdfButtonClicked(null);
-        } else if (item.getItemId() == R.id.player_details) {
-            onManualAddButtonClicked(null);
+        //} else if (item.getItemId() == R.id.player_details) {
+        //    onManualAddButtonClicked(null);
         } else if (item.getItemId() == R.id.list_players) {
-            onInviteFriendsButtonClicked(null);
-        } else if (item.getItemId() == R.id.paid_players) {
-            onPaidPlayersButtonClicked(null);
+            //onInviteFriendsButtonClicked(null);
+            onInviteButtonClicked();
+        //} else if (item.getItemId() == R.id.paid_players) {
+        //    onPaidPlayersButtonClicked(null);
         } else if (item.getItemId() == R.id.game_information) {
             onGameInformationButtonClicked();
         } else {

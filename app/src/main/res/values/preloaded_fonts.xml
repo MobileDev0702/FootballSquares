@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/didact_gothic</item>
         <item>@font/montserrat</item>
+        <item>@font/nunito_light</item>
     </array>
 </resources>

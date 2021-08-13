@@ -4,9 +4,9 @@
     android:layout_width="@dimen/board_cell_size"
     android:layout_height="@dimen/board_cell_size"
     android:background="@color/theme_green"
-    android:fontFamily="@font/raleway_light"
+    android:fontFamily="@font/nunito_light"
     android:gravity="center"
     android:textColor="@color/white"
-    android:textSize="20sp"
+    android:textSize="34sp"
     tools:ignore="MissingPrefix"
     tools:text="1" />

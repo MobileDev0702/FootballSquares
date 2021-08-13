@@ -18,11 +18,11 @@
 
     <TextView
         android:id="@+id/player_name_txt"
-        android:fontFamily="@font/didact_gothic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/nunito"
         android:includeFontPadding="false"
         android:textColor="@color/primary_text"
         android:textSize="16sp"

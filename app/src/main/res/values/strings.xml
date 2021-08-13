@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Football Squares</string>
     <string name="facebook_app_id">1228412957223237</string>
-    <string name="ADMOB_BANNER_UNIT_ID">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ADMOB_APP_ID">ca-app-pub-1761468736156699~2270259675</string>
+    <string name="ADMOB_BANNER_UNIT_ID">ca-app-pub-1761468736156699/1458069982</string>
+    <string name="ADMOB_FIRST_USE_ID">ca-app-pub-1761468736156699/5482271983</string>
 <!--    ca-app-pub-3940256099942544/6300978111 Test ID-->
 <!--    ca-app-pub-1761468736156699/1458069982 YOUR ID-->
 
@@ -33,7 +35,7 @@
     <!-- Settings screen -->
     <string name="settings_title">Settings</string>
     <string name="settings_support">Support</string>
-    <string name="settings_rate">Rate This App</string>
+    <string name="settings_rate">Rate the App</string>
     <string name="settings_about">About</string>
 
     <!-- Friends screen -->
@@ -67,8 +69,8 @@
     </string>
     <string name="games_how_to">How to Play\nSquares</string>
     <string name="about_version">1.0.16</string>
-    <string name="settings_how_to">How to Play Squares</string>
-    <string name="settings_how_to_use">How to Use Contender</string>
+    <string name="settings_how_to">How to Play Football Squares</string>
+    <string name="settings_how_to_use">How to Use the App</string>
     <string name="username_hint">Enter your username</string>
     <string name="about_company1">Copyright © 2021</string>
     <string name="about_company2">moyer</string>
@@ -76,7 +78,7 @@
     <string name="about_company4">LLC</string>
 
     <!-- How to Play screen -->
-    <string name="title_activity_how_to_play">How to Play Squares</string>
+    <string name="title_activity_how_to_play">How to Play Football Squares</string>
     <string name="skip">Skip</string>
     <string name="settings_about_affiliation">This app is not affiliated with or endorsed by the National Football League. Any trademarks used in the app are done so under \"fair use\" with the sole purpose of identifying the respective entities, and remain the property of their respective owners.</string>
     <string name="login_email_hint">EMAIL</string>
@@ -84,7 +86,7 @@
     <string name="login_forgot_password">FORGOT PASSWORD?</string>
     <string name="login_register">REGISTER</string>
     <string name="go_back">Go back</string>
-    <string name="register_login">Already have an account? LOG IN</string>
+    <string name="register_login">Already have an account? SIGN IN</string>
     <string name="welcome_title">Welcome!</string>
     <string name="welcome_desc">Contender - Football Squares is your go-to place to play Football Squares! Now Squares doesn\'t have to only be during the Big Game!</string>
     <string name="games_how_to_use">How to use</string>
@@ -108,7 +110,7 @@
     <string name="list_of_players">List of Players</string>
     <string name="create_pdf">Create PDF</string>
     <string name="game_information">Game Information</string>
-    <string name="invite_friends">Invite Players</string>
+    <string name="invite_friends">Invite Friends</string>
     <string name="add_players">Add Players</string>
     <string name="paid_players">Players Who Paid</string>
     <string name="q1">Q1</string>
@@ -117,11 +119,19 @@
     <string name="quarter_final">FINAL</string>
     <string name="q4">Q4</string>
     <string name="regular_style">Regular Style</string>
-    <string name="rules_default"><![CDATA[There is a winner at the end of each quarter & the final score. Winners are based on the last digit of the score of each team.]]></string>
     <string name="the_players">The Players</string>
     <string name="score">Score</string>
     <string name="game_id">Game ID:</string>
     <string name="purchase_failed">Purchase failed</string>
     <string name="channel_name">Contender</string>
     <string name="channel_description">Contender notifications</string>
+
+    <!-- Game Info Screen -->
+    <string name="info_invite">INVITE FRIENDS</string>
+    <string name="info_created">Created By:</string>
+    <string name="info_id">Game ID:</string>
+    <string name="info_gamerules">GAME RULES</string>
+    <string name="info_players">PLAYERS</string>
+    <string name="info_winners">WINNER\'S ROW</string>
+    <string name="rules_default"><![CDATA[There is a winner at the end of each quarter & the final score. Winners are based on the last digit of the score of each team.]]></string>
 </resources>

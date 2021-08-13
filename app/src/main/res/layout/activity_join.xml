@@ -75,7 +75,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway_light"
+            android:fontFamily="@font/nunito_extralight"
             android:includeFontPadding="false"
             android:text="JOIN A GAME"
             android:textAllCaps="true"

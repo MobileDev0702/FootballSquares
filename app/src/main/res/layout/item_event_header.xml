@@ -4,7 +4,7 @@
     android:id="@+id/event_away_name_txt"
     android:layout_width="match_parent"
     android:layout_height="42dp"
-    android:fontFamily="@font/raleway_light"
+    android:fontFamily="@font/nunito_light"
     android:gravity="center_vertical"
     android:paddingLeft="23dp"
     android:paddingTop="12dp"

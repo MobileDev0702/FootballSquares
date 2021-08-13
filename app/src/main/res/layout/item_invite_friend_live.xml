@@ -12,12 +12,12 @@
 
     <TextView
         android:id="@+id/friend_invite_name_txt"
-        android:fontFamily="@font/didact_gothic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
+        android:fontFamily="@font/nunito"
         android:includeFontPadding="false"
         android:textColor="@color/primary_text"
         android:textSize="16sp"
@@ -25,11 +25,11 @@
 
     <TextView
         android:id="@+id/friend_squares_txt"
-        android:fontFamily="@font/didact_gothic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/nunito_light"
         android:includeFontPadding="false"
         android:textColor="@color/secondary_text"
         android:textSize="16sp"

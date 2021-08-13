@@ -14,11 +14,16 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.moyersoftware.contender.R;
+import com.moyersoftware.contender.util.Util;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
@@ -56,7 +61,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         Picasso.get().load(imageList.get(position)).into(holder.articleImage);
         holder.titleText.setText(titleList.get(position));
-        holder.dateText.setText(dateList.get(position));
+        //---------------------
+        String strDate = dateList.get(position);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date convertedDate = new Date();
+        try {
+            convertedDate = dateFormat.parse(strDate);
+            SimpleDateFormat sdfnewformat = new SimpleDateFormat("MMM d, yyyy");
+            String finalDateString = sdfnewformat.format(convertedDate);
+            holder.dateText.setText(finalDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //----------------
         holder.authorText.setText(authorList.get(position));
         holder.descText.setText(descList.get(position));
 

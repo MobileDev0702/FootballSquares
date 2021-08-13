@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -30,18 +31,19 @@
             android:paddingBottom="12dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="12dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_info_outline"
-                android:tint="#F2CB48" />
+                android:src="@drawable/icon_info"
+                app:tint="@color/theme_green" />
 
             <TextView
                 android:id="@+id/game_information_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
                 android:text="@string/game_information"
                 android:textColor="@color/primary_text"
                 android:textSize="14sp" />
@@ -68,16 +70,18 @@
             android:paddingBottom="12dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="12dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_picture_as_pdf" />
+                android:src="@drawable/icon_pdf"
+                app:tint="@color/primary_text" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito"
                 android:text="@string/create_pdf"
                 android:textColor="@color/primary_text"
                 android:textSize="14sp" />
@@ -85,41 +89,6 @@
 
         <View
             android:id="@+id/player_details_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginStart="44dp"
-            android:background="#11000000" />
-
-        <LinearLayout
-            android:id="@+id/player_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingTop="12dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="12dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="12dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_person" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/player_details"
-                android:textColor="@color/primary_text"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginStart="44dp"
@@ -140,18 +109,20 @@
             android:paddingBottom="12dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="12dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_people" />
+                android:src="@drawable/icon_friends"
+                app:tint="@color/primary_text" />
 
             <TextView
                 android:id="@+id/list_players_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/list_of_players"
+                android:fontFamily="@font/nunito"
+                android:text="@string/invite_friends"
                 android:textColor="@color/primary_text"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -163,35 +134,5 @@
             android:layout_marginStart="44dp"
             android:background="#11000000" />
 
-        <LinearLayout
-            android:id="@+id/paid_players"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingTop="12dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="12dp"
-            tools:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="12dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_attach_money" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/paid_players"
-                android:textColor="@color/primary_text"
-                android:textSize="14sp" />
-        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="4dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="8dp"
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/raleway_light"
+                android:fontFamily="@font/nunito_extralight"
                 android:text="My Account"
                 android:textAllCaps="true"
                 android:textColor="@color/secondary_text"
@@ -51,7 +51,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/raleway_semibold"
+                    android:fontFamily="@font/nunito_semibold"
                     android:includeFontPadding="false"
                     android:paddingLeft="16dp"
                     android:paddingTop="10dp"
@@ -66,13 +66,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:fontFamily="@font/raleway_light"
+                    android:fontFamily="@font/nunito_light"
                     android:includeFontPadding="false"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="12dp"
                     android:textColor="@color/primary_text"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     tools:text="Dmytro Sheiko" />
 
                 <View
@@ -83,7 +83,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/raleway_semibold"
+                    android:fontFamily="@font/nunito_semibold"
                     android:includeFontPadding="false"
                     android:paddingLeft="16dp"
                     android:paddingTop="10dp"
@@ -98,13 +98,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:fontFamily="@font/raleway_light"
+                    android:fontFamily="@font/nunito_light"
                     android:includeFontPadding="false"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingBottom="12dp"
                     android:textColor="@color/primary_text"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     tools:text="sheyko.dmitriy@gmail.com" />
 
                 <!--<TextView
@@ -131,7 +131,7 @@
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:drawableTint="@color/primary_text"
-                    android:fontFamily="@font/raleway_semibold"
+                    android:fontFamily="@font/nunito_semibold"
                     android:includeFontPadding="false"
                     android:onClick="onLogOutButtonClicked"
                     android:padding="16dp"
@@ -151,7 +151,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="4dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="8dp"
@@ -168,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/raleway_light"
+                android:fontFamily="@font/nunito_extralight"
                 android:text="Support"
                 android:textAllCaps="true"
                 android:textColor="@color/secondary_text"
@@ -191,7 +191,43 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
-                    android:fontFamily="@font/raleway_semibold"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:includeFontPadding="false"
+                    android:onClick="onHowToButtonClicked"
+                    android:padding="16dp"
+                    android:text="@string/settings_how_to"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:includeFontPadding="false"
+                    android:onClick="onHowToUseButtonClicked"
+                    android:padding="16dp"
+                    android:text="@string/settings_how_to_use"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:fontFamily="@font/nunito_semibold"
                     android:includeFontPadding="false"
                     android:onClick="onSupportButtonClicked"
                     android:padding="16dp"
@@ -210,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
-                    android:fontFamily="@font/raleway_semibold"
+                    android:fontFamily="@font/nunito_semibold"
                     android:includeFontPadding="false"
                     android:onClick="onRateButtonClicked"
                     android:padding="16dp"
@@ -230,7 +266,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:autoLink="web"
-        android:fontFamily="@font/raleway_light"
+        android:fontFamily="@font/nunito_light"
         android:lineSpacingExtra="2dp"
         android:text="@string/settings_about_copyright"
         android:textAlignment="center"
@@ -246,6 +282,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -309,7 +346,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:fontFamily="@font/raleway_light"
+        android:fontFamily="@font/nunito_light"
         android:text="@string/about_company1"
         android:textColor="@color/theme_gray_dark"
         android:textSize="10sp"
@@ -322,7 +359,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
-        android:fontFamily="@font/raleway_light"
+        android:fontFamily="@font/nunito_light"
         android:text="version 3.0.00"
         android:textColor="@color/theme_gray_dark"
         android:textSize="10sp"

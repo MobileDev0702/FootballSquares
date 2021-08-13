@@ -9,12 +9,12 @@
     android:paddingTop="16dp">
 
     <EditText
-        android:fontFamily="@font/didact_gothic"
         android:id="@+id/friends_find_edit_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:fontFamily="@font/nunito_light"
         android:hint="Enter Friend's Username"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"

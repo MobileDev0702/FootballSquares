@@ -104,9 +104,9 @@ public class LoadingActivity extends AppCompatActivity {
                         String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
                         Util.setCurrentPlayerId(id);
                         if (!Util.findFriendsShown(id)) {
-                            startActivity(new Intent(LoadingActivity.this,
-                                    FindFriendsActivity.class));
-                            Util.setFindFriendsShown(id);
+                            //startActivity(new Intent(LoadingActivity.this,
+                            //        FindFriendsActivity.class));
+                            //Util.setFindFriendsShown(id);
                         } else {
                             startActivity(new Intent(LoadingActivity.this, MainActivity.class));
                         }
@@ -135,9 +135,9 @@ public class LoadingActivity extends AppCompatActivity {
                                                 .getCurrentUser()).getUid();
                                         Util.setCurrentPlayerId(id);
                                         if (!Util.findFriendsShown(id)) {
-                                            startActivity(new Intent(LoadingActivity.this,
-                                                    FindFriendsActivity.class));
-                                            Util.setFindFriendsShown(id);
+                                            //startActivity(new Intent(LoadingActivity.this,
+                                            //        FindFriendsActivity.class));
+                                            //Util.setFindFriendsShown(id);
                                         } else {
                                             startActivity(new Intent(LoadingActivity.this,
                                                     MainActivity.class));

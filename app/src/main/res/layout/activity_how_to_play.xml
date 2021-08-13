@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
+                android:fontFamily="@font/nunito_semibold"
                 android:onClick="onSkipButtonClicked"
                 android:background="?selectableItemBackground"
                 android:layout_height="48dp"

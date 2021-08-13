@@ -23,6 +23,15 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.applinks.AppLinkData;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -68,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     @BindView(R.id.main_pager)
     ViewPager mPager;
+    private static final String AD_UNIT_ID = "ca-app-pub-1761468736156699/5482271983";
 
     // Usual variables
     private final int[] mTabIcons = new int[]{
@@ -77,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
     };
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private InterstitialAd interstitialAd;
+
+    private Boolean isClickHowToPlay;
+    private Boolean isClickHowToUse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +106,19 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        checkUserInvite();
-        checkGameInvite();
-        checkFacebookInvite();
+        // ad
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+        //Toast.makeText(MainActivity.this, "ad 7 ", Toast.LENGTH_SHORT).show();
+        loadAd();
+        //---
+
+        //checkUserInvite();
+        //checkGameInvite();
+        //checkFacebookInvite();
 
         setContentView(R.layout.activity_main);
 
@@ -113,6 +137,96 @@ public class MainActivity extends AppCompatActivity {
 
         updateGoogleToken();
 
+    }
+
+    private void showInterstitial() {
+        //Toast.makeText(MainActivity.this, "ad 8 ", Toast.LENGTH_SHORT).show();
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (interstitialAd != null) {
+            //Toast.makeText(MainActivity.this, "ad 9 ", Toast.LENGTH_SHORT).show();
+            interstitialAd.show(this);
+        } else {
+            //Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+            //
+            //Toast.makeText(MainActivity.this, "ad 10 ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void loadAd() {
+        //Toast.makeText(MainActivity.this, "ad 1 ", Toast.LENGTH_SHORT).show();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(
+                this,
+                AD_UNIT_ID,
+                adRequest,
+                new InterstitialAdLoadCallback() {
+
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        //Toast.makeText(MainActivity.this, "ad 2 ", Toast.LENGTH_SHORT).show();
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        MainActivity.this.interstitialAd = interstitialAd;
+                        //Log.i(TAG, "onAdLoaded");
+                        //Toast.makeText(MainActivity.this, "onAdLoaded()", Toast.LENGTH_SHORT).show();
+                        interstitialAd.setFullScreenContentCallback(
+                                new FullScreenContentCallback() {
+                                    @Override
+                                    public void onAdDismissedFullScreenContent() {
+                                        //Toast.makeText(MainActivity.this, "ad 3 ", Toast.LENGTH_SHORT).show();
+                                        // Called when fullscreen content is dismissed.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivity.this.interstitialAd = null;
+                                        //Log.d("TAG", "The ad was dismissed.");
+                                        if (isClickHowToPlay) {
+                                            isClickHowToPlay = false;
+                                            loadAd();
+                                            startActivity(new Intent(MainActivity.this, HowToPlayActivity.class));
+                                        }
+                                        if (isClickHowToUse) {
+                                            isClickHowToUse = false;
+                                            loadAd();
+                                            startActivity(new Intent(MainActivity.this, HowToUseActivity.class));
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                        //Toast.makeText(MainActivity.this, "ad 4 ", Toast.LENGTH_SHORT).show();
+                                        // Called when fullscreen content failed to show.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivity.this.interstitialAd = null;
+                                        //Log.d("TAG", "The ad failed to show.");
+                                    }
+
+                                    @Override
+                                    public void onAdShowedFullScreenContent() {
+                                        //Toast.makeText(MainActivity.this, "ad 5 ", Toast.LENGTH_SHORT).show();
+                                        // Called when fullscreen content is shown.
+                                        //Log.d("TAG", "The ad was shown.");
+
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        //Log.i(TAG, loadAdError.getMessage());
+                        interstitialAd = null;
+                        //Toast.makeText(MainActivity.this, "ad 6 ", Toast.LENGTH_SHORT).show();
+
+                        String error =
+                                String.format(
+                                        "domain: %s, code: %d, message: %s",
+                                        loadAdError.getDomain(), loadAdError.getCode(), loadAdError.getMessage());
+                        //Toast.makeText(
+                        //        MainActivity.this, "onAdFailedToLoad() with error: " + error, Toast.LENGTH_SHORT)
+                        //        .show();
+                    }
+                });
     }
 
     private void receiveDynamicLink() {
@@ -511,10 +625,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onHowToButtonClicked(View view) {
-        startActivity(new Intent(this, HowToPlayActivity.class));
+        showInterstitial();
+        isClickHowToPlay = true;
     }
 
     public void onHowToUseButtonClicked(View view) {
-        startActivity(new Intent(this, HowToUseActivity.class));
+        showInterstitial();
+        isClickHowToUse = true;
     }
 }

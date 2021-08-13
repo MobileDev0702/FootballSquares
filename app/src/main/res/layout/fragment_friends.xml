@@ -14,13 +14,13 @@
 
         <TextView
             android:id="@+id/friends_pending_title_txt"
-            android:fontFamily="@font/didact_gothic"
-            android:textAllCaps="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:fontFamily="@font/nunito_light"
             android:text="@string/friends_pending_title"
+            android:textAllCaps="true"
             android:textColor="@color/secondary_text"
             android:textSize="14sp" />
 
@@ -37,13 +37,13 @@
 
         <Button
             android:id="@+id/friends_find_btn"
-            android:fontFamily="@font/didact_gothic"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="14dp"
             android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
+            android:fontFamily="@font/nunito_semibold"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="Find friends"
@@ -52,13 +52,13 @@
 
         <TextView
             android:id="@+id/friends_title_txt"
-            android:fontFamily="@font/didact_gothic"
-            android:textAllCaps="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:fontFamily="@font/nunito_light"
             android:text="@string/friends_title"
+            android:textAllCaps="true"
             android:textColor="@color/secondary_text"
             android:textSize="14sp" />
 
